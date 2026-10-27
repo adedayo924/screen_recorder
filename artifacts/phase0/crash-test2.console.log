@@ -1,0 +1,11 @@
+Capture item: Jeilo Phase 0 Test Pattern (1920x1080)
+Microphone:  Microphone (Logi USB Headset H340)
+System audio: Speakers (Logi USB Headset H340)
+Starting FFmpeg (qsv)...
+Starting synchronized audio and video writers...
+Recording for 120s -> C:\Users\DIC ICT\Desktop\programming\screen_recorder\artifacts\phase0\crash-test2.mkv
+   2.1s  video 63/3600 audio  2.0s  mic .......... 0.032  sys ####...... 0.443  app 11.5% 157.7MiB  ffmpeg 13.1% 133.7MiB
+   4.2s  video 125/3600 audio  4.0s  mic .......... 0.042  sys #......... 0.130  app  9.2% 159.1MiB  ffmpeg 13.6% 134.0MiB
+   6.2s  video 185/3600 audio  6.0s  mic #......... 0.053  sys #......... 0.112  app  9.5% 159.6MiB  ffmpeg 11.4% 134.1MiB
+   8.3s  video 248/3600 audio  8.0s  mic .......... 0.016  sys #......... 0.124  app 11.6% 159.1MiB  ffmpeg  7.0% 134.1MiB
+  10.4s  video 310/3600 audio 10.0s  mic .......... 0.030  sys #......... 0.102  app  8.5% 159.6MiB  ffmpeg 12.2% 134.2MiB
