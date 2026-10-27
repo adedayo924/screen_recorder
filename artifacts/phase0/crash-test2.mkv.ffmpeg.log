@@ -1,0 +1,2 @@
+ffmpeg -hide_banner -nostdin -loglevel warning -y -f rawvideo -pix_fmt bgra -video_size 1920x1080 -framerate 30 -i \\.\pipe\jeilo_video_da61dd98cc8b4fea943d9a7d5e33553b -f s16le -ar 48000 -ac 2 -i \\.\pipe\jeilo_audio_da61dd98cc8b4fea943d9a7d5e33553b -map 0:v:0 -map 1:a:0 -c:v h264_qsv -preset veryfast -global_quality 24 -look_ahead 0 -c:a aac -b:a 192k -f matroska "C:\Users\DIC ICT\Desktop\programming\screen_recorder\artifacts\phase0\crash-test2.mkv"
+[aist#1:0/pcm_s16le @ 0000025a79db63c0] Guessed Channel Layout: stereo
