@@ -1,0 +1,975 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:Jeilo.App.ViewModels"
+        mc:Ignorable="d"
+        x:Class="Jeilo.App.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="{Binding WindowTitle}"
+        Icon="/Assets/jeilo.ico"
+        Width="1240" Height="820"
+        MinWidth="1060" MinHeight="700"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource CanvasBrush}">
+
+    <Window.KeyBindings>
+        <KeyBinding Gesture="Ctrl+R" Command="{Binding ToggleRecordingShortcutCommand}" />
+        <KeyBinding Gesture="Ctrl+D1" Command="{Binding NavigateCommand}" CommandParameter="record" />
+        <KeyBinding Gesture="Ctrl+D2" Command="{Binding NavigateCommand}" CommandParameter="library" />
+        <KeyBinding Gesture="Ctrl+D3" Command="{Binding NavigateCommand}" CommandParameter="settings" />
+    </Window.KeyBindings>
+
+    <Grid>
+        <!-- Main Application Shell -->
+        <Grid ColumnDefinitions="240,*">
+
+            <!-- Sidebar -->
+            <Border Background="{DynamicResource SurfaceBrush}"
+                    BorderBrush="{DynamicResource BorderBrushSoft}"
+                    BorderThickness="0,0,1,0">
+                <Grid Margin="16,22,16,18" RowDefinitions="Auto,Auto,*,Auto">
+
+                    <!-- Brand Header -->
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Border Width="42" Height="42" CornerRadius="12" Background="{DynamicResource BrandGradient}">
+                            <Path Data="M8 5 L19 12 L8 19 Z"
+                                  Fill="White"
+                                  Width="18" Height="18"
+                                  Stretch="Uniform"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center" />
+                        </Border>
+                        <StackPanel VerticalAlignment="Center" Spacing="2">
+                            <TextBlock Text="Jeilo" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" />
+                            <TextBlock Text="PRO RECORDER" FontSize="10" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" LetterSpacing="0.8" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Navigation Links -->
+                    <StackPanel Grid.Row="1" Margin="0,32,0,0" Spacing="6">
+                        <Button Classes="nav" Classes.active="{Binding IsRecordPage}"
+                                Command="{Binding NavigateCommand}" CommandParameter="record"
+                                AutomationProperties.Name="Record page"
+                                IsEnabled="{Binding CanNavigate}" ToolTip.Tip="Record (Ctrl+1)">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <StackPanel Orientation="Horizontal" Spacing="11">
+                                    <Path Data="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 15a5 5 0 1 1 5-5a5 5 0 0 1-5 5Z"
+                                          Fill="{DynamicResource TextSecondaryBrush}"
+                                          Width="15" Height="15" Stretch="Uniform" VerticalAlignment="Center" />
+                                    <TextBlock Text="Record" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <Border Grid.Column="1" Width="6" Height="6" CornerRadius="3"
+                                        Background="{DynamicResource AccentBrush}"
+                                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                        IsVisible="{Binding IsRecordPage}" />
+                            </Grid>
+                        </Button>
+
+                        <Button Classes="nav" Classes.active="{Binding IsLibraryPage}"
+                                Command="{Binding NavigateCommand}" CommandParameter="library"
+                                AutomationProperties.Name="Library page"
+                                IsEnabled="{Binding CanNavigate}" ToolTip.Tip="Library (Ctrl+2)">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <StackPanel Orientation="Horizontal" Spacing="11">
+                                    <Path Data="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"
+                                          Fill="{DynamicResource TextSecondaryBrush}"
+                                          Width="15" Height="15" Stretch="Uniform" VerticalAlignment="Center" />
+                                    <TextBlock Text="Library" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <Border Grid.Column="2" Classes="pill neutral" Padding="7,2" Margin="4,0,0,0"
+                                        VerticalAlignment="Center" IsVisible="{Binding HasRecordings}">
+                                    <TextBlock Text="{Binding Recordings.Count}" FontSize="11" FontWeight="Bold"
+                                               Foreground="{DynamicResource TextSecondaryBrush}" />
+                                </Border>
+                            </Grid>
+                        </Button>
+
+                        <Button Classes="nav" Classes.active="{Binding IsSettingsPage}"
+                                Command="{Binding NavigateCommand}" CommandParameter="settings"
+                                AutomationProperties.Name="Settings page"
+                                IsEnabled="{Binding CanNavigate}" ToolTip.Tip="Settings (Ctrl+3)">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <StackPanel Orientation="Horizontal" Spacing="11">
+                                    <Path Data="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"
+                                          Fill="{DynamicResource TextSecondaryBrush}"
+                                          Width="15" Height="15" Stretch="Uniform" VerticalAlignment="Center" />
+                                    <TextBlock Text="Settings" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <Border Grid.Column="1" Width="6" Height="6" CornerRadius="3"
+                                        Background="{DynamicResource AccentBrush}"
+                                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                        IsVisible="{Binding IsSettingsPage}" />
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- Sidebar Footer: Encoder & Privacy -->
+                    <Border Grid.Row="3" Classes="card" Padding="14">
+                        <StackPanel Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBlock Text="ENCODER" Classes="label" VerticalAlignment="Center" />
+                                <Ellipse Grid.Column="1" Width="7" Height="7"
+                                         Fill="{DynamicResource AccentBrush}"
+                                         IsVisible="{Binding IsFfmpegReady}"
+                                         VerticalAlignment="Center" />
+                            </Grid>
+                            <TextBlock Text="{Binding FfmpegStatus}" FontSize="12" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}" />
+                            <TextBlock Text="100% Offline. Recordings never leave this PC." FontSize="11"
+                                       Foreground="{DynamicResource TextSecondaryBrush}" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Main Content Area -->
+            <Grid Grid.Column="1" Margin="32,24,32,20" RowDefinitions="Auto,*,Auto">
+
+                <!-- Page Header Bar -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,22">
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="{Binding PageTitle}" FontSize="28" FontWeight="Bold"
+                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                        <TextBlock Text="{Binding PageSubtitle}" FontSize="13"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" />
+                    </StackPanel>
+                    <Border Grid.Column="1" Classes="pill" VerticalAlignment="Top" Margin="0,4,0,0">
+                        <StackPanel Orientation="Horizontal" Spacing="7">
+                            <Ellipse Width="7" Height="7" Fill="{DynamicResource AccentBrush}" VerticalAlignment="Center" />
+                            <TextBlock Text="LOCAL ENCRYPTION FREE" Classes="label" Foreground="{DynamicResource AccentBrush}" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- ==================== RECORD PAGE ==================== -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" IsVisible="{Binding IsRecordPage}">
+                    <Grid ColumnDefinitions="1.5*,1*" ColumnSpacing="20">
+
+                        <!-- Left Column: Source Preview & Audio Meters -->
+                        <StackPanel Spacing="18">
+
+                            <!-- Studio Capture Preview Card -->
+                            <Border Classes="card" Padding="0" ClipToBounds="True">
+                                <Border Background="{DynamicResource PreviewGradient}" CornerRadius="16" Padding="20">
+                                    <Grid RowDefinitions="Auto,*,Auto" MinHeight="275">
+
+                                        <!-- Preview Top Bar -->
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <Border Background="#28FFFFFF" CornerRadius="20" Padding="10,4.5">
+                                                    <TextBlock Text="{Binding SourceBadgeText}" FontSize="10.5" FontWeight="Bold"
+                                                               Foreground="#EAF7F0" LetterSpacing="0.5" />
+                                                </Border>
+                                                <Border Background="#33EF4444" BorderBrush="{DynamicResource DangerBrush}" BorderThickness="1" CornerRadius="20" Padding="10,4.5"
+                                                        IsVisible="{Binding IsRecording}">
+                                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                                        <Ellipse Width="7" Height="7" Fill="{DynamicResource DangerBrush}" VerticalAlignment="Center" />
+                                                        <TextBlock Text="LIVE" FontSize="10.5" FontWeight="Bold" Foreground="White" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </StackPanel>
+
+                                            <Border Grid.Column="1" Background="#20000000" CornerRadius="8" Padding="8,4">
+                                                <TextBlock Text="{Binding SelectedFps, StringFormat='{}{0} FPS'}"
+                                                           FontSize="11" FontWeight="SemiBold" Foreground="#B9D8C9" />
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Monitor / Window Frame Artwork -->
+                                        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10" Margin="0,16,0,16">
+                                            <Border Width="164" Height="102" CornerRadius="10"
+                                                    Background="#1AFFFFFF" BorderBrush="#55FFFFFF" BorderThickness="2"
+                                                    BoxShadow="0 8 20 0 #40000000">
+                                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="6">
+                                                    <Path Data="M20 3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h6l-2 3v1h8v-1l-2-3h6c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 13H4V5h16v11z"
+                                                          Fill="#88FFFFFF" Width="22" Height="22" Stretch="Uniform" HorizontalAlignment="Center"
+                                                          IsVisible="{Binding IsMonitorSource}" />
+                                                    <Path Data="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"
+                                                          Fill="#88FFFFFF" Width="22" Height="22" Stretch="Uniform" HorizontalAlignment="Center"
+                                                          IsVisible="{Binding IsWindowSource}" />
+                                                    <TextBlock Text="{Binding CapturePreviewTitle}"
+                                                               FontSize="13.5" FontWeight="Bold" Foreground="White"
+                                                               HorizontalAlignment="Center" TextAlignment="Center"
+                                                               TextWrapping="Wrap" MaxLines="2"
+                                                               TextTrimming="CharacterEllipsis" MaxWidth="150" />
+                                                    <TextBlock Text="{Binding PreviewStateText}" FontSize="10" Foreground="#B9D8C9"
+                                                               HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Border>
+                                            <Border Width="42" Height="4" CornerRadius="2" Background="#55FFFFFF"
+                                                    HorizontalAlignment="Center" IsVisible="{Binding IsMonitorSource}" />
+                                            <TextBlock Text="{Binding CapturePreviewSubtitle}" FontSize="11.5"
+                                                       FontWeight="Medium" Foreground="#DDF0E6"
+                                                       HorizontalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                                       MaxLines="1" MaxWidth="260"
+                                                       ToolTip.Tip="{Binding CapturePreviewSubtitle}" />
+                                        </StackPanel>
+
+                                        <!-- Target Selection Control Strip -->
+                                        <Border Grid.Row="2" Background="#4D07140E" CornerRadius="12" Padding="14,11">
+                                            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto"
+                                                  ColumnSpacing="12" RowSpacing="10">
+                                                <TextBlock Text="Source" FontSize="11.5" FontWeight="SemiBold"
+                                                           Foreground="#B9D8C9" VerticalAlignment="Center" />
+                                                <ComboBox Grid.Column="1" Grid.ColumnSpan="2"
+                                                          ItemsSource="{Binding CaptureSources}"
+                                                          SelectedItem="{Binding SelectedSource}"
+                                                          AutomationProperties.Name="Capture source"
+                                                          IsEnabled="{Binding IsConfigurationEnabled}"
+                                                          HorizontalAlignment="Stretch" MinHeight="36">
+                                                    <ComboBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Text="{Binding Name}" />
+                                                        </DataTemplate>
+                                                    </ComboBox.ItemTemplate>
+                                                </ComboBox>
+
+                                                <TextBlock Grid.Row="1" Text="{Binding TargetLabel}" FontSize="11.5"
+                                                           FontWeight="SemiBold" Foreground="#B9D8C9"
+                                                           VerticalAlignment="Center" />
+                                                <ComboBox Grid.Row="1" Grid.Column="1"
+                                                          ItemsSource="{Binding Monitors}"
+                                                          SelectedItem="{Binding SelectedMonitor}"
+                                                          IsVisible="{Binding IsMonitorSource}"
+                                                          AutomationProperties.Name="Display"
+                                                          IsEnabled="{Binding IsConfigurationEnabled}"
+                                                          HorizontalAlignment="Stretch" MinHeight="36">
+                                                    <ComboBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Text="{Binding Name}" />
+                                                        </DataTemplate>
+                                                    </ComboBox.ItemTemplate>
+                                                </ComboBox>
+                                                <ComboBox Grid.Row="1" Grid.Column="1"
+                                                          ItemsSource="{Binding Windows}"
+                                                          SelectedItem="{Binding SelectedWindow}"
+                                                          IsVisible="{Binding IsWindowSource}"
+                                                          AutomationProperties.Name="Window"
+                                                          IsEnabled="{Binding IsConfigurationEnabled}"
+                                                          HorizontalAlignment="Stretch" MinHeight="36"
+                                                          MaxDropDownHeight="320"
+                                                          ToolTip.Tip="{Binding SelectedWindow.Detail}">
+                                                    <ComboBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Spacing="1">
+                                                                <TextBlock Text="{Binding Name}" FontSize="12"
+                                                                           TextTrimming="CharacterEllipsis" MaxLines="1"
+                                                                           MaxWidth="420" />
+                                                                <TextBlock Text="{Binding Detail}" FontSize="10"
+                                                                           Foreground="{DynamicResource TextSecondaryBrush}"
+                                                                           TextTrimming="CharacterEllipsis" MaxLines="1"
+                                                                           MaxWidth="420" />
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ComboBox.ItemTemplate>
+                                                </ComboBox>
+                                                <Button Grid.Row="1" Grid.Column="2" Classes="ghost" Content="Refresh"
+                                                        Command="{Binding RefreshDevicesCommand}"
+                                                        IsEnabled="{Binding IsConfigurationEnabled}" />
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </Border>
+
+                            <!-- Audio Studio Card with Peak VU Meters -->
+                            <Border Classes="card" Padding="20">
+                                <StackPanel Spacing="16">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <TextBlock Text="Audio Sources" FontSize="16" FontWeight="Bold"
+                                                       Foreground="{DynamicResource TextPrimaryBrush}" />
+                                            <Border Classes="pill neutral" Padding="8,2" VerticalAlignment="Center">
+                                                <TextBlock Text="48 kHz Stereo" FontSize="10" FontWeight="SemiBold"
+                                                           Foreground="{DynamicResource TextSecondaryBrush}" />
+                                            </Border>
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1" Text="{Binding AudioSummary}" FontSize="11.5"
+                                                   Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                                    </Grid>
+
+                                    <!-- Microphone Channel -->
+                                    <Grid ColumnDefinitions="Auto,*,110" ColumnSpacing="14">
+                                        <ToggleSwitch IsChecked="{Binding MicrophoneEnabled}" OnContent="" OffContent=""
+                                                      IsEnabled="{Binding IsConfigurationEnabled}"
+                                                      VerticalAlignment="Center" />
+                                        <StackPanel Grid.Column="1" Spacing="5">
+                                            <TextBlock Text="Microphone Input" FontSize="12.5" FontWeight="SemiBold"
+                                                       Foreground="{DynamicResource TextPrimaryBrush}" />
+                                            <ComboBox ItemsSource="{Binding Microphones}"
+                                                      SelectedItem="{Binding SelectedMicrophone}"
+                                                      IsEnabled="{Binding CanEditMicrophone}"
+                                                      HorizontalAlignment="Stretch" MinHeight="36"
+                                                      ToolTip.Tip="{Binding SelectedMicrophone.Detail}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Name}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2" Spacing="6" VerticalAlignment="Center">
+                                            <Grid ColumnDefinitions="*,Auto">
+                                                <TextBlock Text="LEVEL" Classes="label" FontSize="10" />
+                                                <TextBlock Grid.Column="1" Text="{Binding MicLevelText}" FontSize="11" FontWeight="SemiBold"
+                                                           Foreground="{DynamicResource TextSecondaryBrush}" />
+                                            </Grid>
+                                            <ProgressBar Classes="vu-meter" Value="{Binding MicLevel}" Maximum="100" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Border Classes="separator" />
+
+                                    <!-- System Audio Channel -->
+                                    <Grid ColumnDefinitions="Auto,*,110" ColumnSpacing="14">
+                                        <ToggleSwitch IsChecked="{Binding SystemAudioEnabled}" OnContent="" OffContent=""
+                                                      IsEnabled="{Binding IsConfigurationEnabled}"
+                                                      VerticalAlignment="Center" />
+                                        <StackPanel Grid.Column="1" Spacing="5">
+                                            <TextBlock Text="System Audio Loopback" FontSize="12.5" FontWeight="SemiBold"
+                                                       Foreground="{DynamicResource TextPrimaryBrush}" />
+                                            <ComboBox ItemsSource="{Binding SystemAudioDevices}"
+                                                      SelectedItem="{Binding SelectedSystemAudio}"
+                                                      IsEnabled="{Binding CanEditSystemAudio}"
+                                                      HorizontalAlignment="Stretch" MinHeight="36"
+                                                      ToolTip.Tip="{Binding SelectedSystemAudio.Detail}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Name}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2" Spacing="6" VerticalAlignment="Center">
+                                            <Grid ColumnDefinitions="*,Auto">
+                                                <TextBlock Text="LEVEL" Classes="label" FontSize="10" />
+                                                <TextBlock Grid.Column="1" Text="{Binding SystemLevelText}" FontSize="11" FontWeight="SemiBold"
+                                                           Foreground="{DynamicResource TextSecondaryBrush}" />
+                                            </Grid>
+                                            <ProgressBar Classes="vu-meter" Value="{Binding SystemLevel}" Maximum="100" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <TextBlock Text="Pro Tip: Use headphones to avoid audio feedback loops between mic and speakers."
+                                               FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <!-- Right Column: Recording Controls, Presets & Save Folder -->
+                        <StackPanel Grid.Column="1" Spacing="18">
+
+                            <!-- Recording Master Console -->
+                            <Border Classes="card" Padding="22">
+                                <StackPanel Spacing="14">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <TextBlock Text="{Binding RecorderStateLabel}" Classes="label"
+                                                   VerticalAlignment="Center" />
+                                        <Border Classes="pill danger" Padding="8,3" IsVisible="{Binding IsRecording}">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <Ellipse Width="7" Height="7" Fill="{DynamicResource DangerBrush}" VerticalAlignment="Center" />
+                                                <TextBlock Text="REC" FontSize="10" FontWeight="Bold" Foreground="{DynamicResource DangerBrush}" />
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+
+                                    <!-- Monospace Timer -->
+                                    <TextBlock Text="{Binding ElapsedText}" Classes="timer" HorizontalAlignment="Center" />
+
+                                    <!-- Status Message -->
+                                    <StackPanel Spacing="3" HorizontalAlignment="Center">
+                                        <TextBlock Text="{Binding StatusText}" FontSize="13.5" FontWeight="SemiBold"
+                                                   HorizontalAlignment="Center"
+                                                   Classes.status-error="{Binding IsStatusError}" />
+                                        <TextBlock Text="{Binding StatusDetail}" FontSize="11" Classes="muted"
+                                                   HorizontalAlignment="Center"
+                                                   Classes.status-error="{Binding IsStatusError}" TextWrapping="Wrap" />
+                                    </StackPanel>
+
+                                    <!-- Countdown Preset Selector -->
+                                    <Grid ColumnDefinitions="Auto,*" Margin="0,4,0,0" IsVisible="{Binding IsConfigurationEnabled}">
+                                        <TextBlock Text="Countdown" Classes="label" VerticalAlignment="Center" />
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6" HorizontalAlignment="Right">
+                                            <ComboBox ItemsSource="{Binding CountdownOptions}"
+                                                      SelectedItem="{Binding SelectedCountdownSeconds}"
+                                                      MinHeight="30" Padding="8,4" FontSize="11">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding StringFormat='{}{0} seconds'}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!-- Master Action Button -->
+                                    <Button Classes="primary" Classes.recording="{Binding IsRecording}"
+                                            Content="{Binding RecordButtonText}"
+                                            Command="{Binding ToggleRecordingCommand}"
+                                            IsEnabled="{Binding CanToggleRecording}"
+                                            ToolTip.Tip="Start or stop recording (Ctrl+R)"
+                                            Height="50" FontSize="15" HorizontalAlignment="Stretch"
+                                            Margin="0,4,0,0" />
+
+                                    <TextBlock Text="Hotkeys: Ctrl+R to start/stop • Recordings stay local"
+                                               FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}"
+                                               TextWrapping="Wrap" HorizontalAlignment="Center" />
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Last Saved Recording Card -->
+                            <Border Classes="card" Padding="16" IsVisible="{Binding HasLastSavedFile}">
+                                <StackPanel Spacing="10">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <StackPanel Spacing="2">
+                                            <TextBlock Text="Last Recording Saved" FontSize="12.5" FontWeight="SemiBold"
+                                                       Foreground="{DynamicResource TextPrimaryBrush}" />
+                                            <TextBlock Text="{Binding LastSavedFileName}" FontSize="10.5"
+                                                       Foreground="{DynamicResource TextSecondaryBrush}"
+                                                       TextTrimming="CharacterEllipsis" MaxLines="1" />
+                                        </StackPanel>
+                                        <Border Grid.Column="1" Width="26" Height="26" CornerRadius="13"
+                                                Background="{DynamicResource AccentSoftBrush}" VerticalAlignment="Top">
+                                            <Path Data="M5 12 L10 17 L19 7" Stroke="{DynamicResource AccentBrush}"
+                                                  StrokeThickness="2" StrokeLineCap="Round" StrokeJoin="Round"
+                                                  Width="12" Height="12" Stretch="Uniform"
+                                                  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                        <Button Classes="secondary" Content="Play Video" Command="{Binding OpenLastSavedCommand}"
+                                                HorizontalAlignment="Stretch" />
+                                        <Button Grid.Column="1" Classes="ghost" Content="Show in Folder"
+                                                Command="{Binding ShowLastSavedInFolderCommand}"
+                                                HorizontalAlignment="Stretch" />
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Quick Recording Settings -->
+                            <Border Classes="card" Padding="18">
+                                <StackPanel Spacing="13">
+                                    <TextBlock Text="Video Preset" FontSize="15" FontWeight="Bold"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" />
+                                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                        <StackPanel Spacing="5">
+                                            <TextBlock Text="Quality" Classes="label" />
+                                            <ComboBox ItemsSource="{Binding Qualities}"
+                                                      SelectedItem="{Binding SelectedQuality}"
+                                                      IsEnabled="{Binding IsConfigurationEnabled}"
+                                                      HorizontalAlignment="Stretch" MinHeight="36">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Name}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Spacing="5">
+                                            <TextBlock Text="Frame Rate" Classes="label" />
+                                            <ComboBox ItemsSource="{Binding FpsOptions}"
+                                                      SelectedItem="{Binding SelectedFps}"
+                                                      IsEnabled="{Binding IsConfigurationEnabled}"
+                                                      HorizontalAlignment="Stretch" MinHeight="36">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding StringFormat='{}{0} fps'}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <StackPanel Spacing="5">
+                                        <TextBlock Text="Encoder Engine" Classes="label" />
+                                        <ComboBox ItemsSource="{Binding Encoders}"
+                                                  SelectedItem="{Binding SelectedEncoder}"
+                                                  IsEnabled="{Binding IsConfigurationEnabled}"
+                                                  HorizontalAlignment="Stretch" MinHeight="36">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
+
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <TextBlock Text="Capture mouse cursor" FontSize="12.5" FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center" />
+                                        <ToggleSwitch Grid.Column="1" IsChecked="{Binding IncludeCursor}"
+                                                      IsEnabled="{Binding IsConfigurationEnabled}"
+                                                      OnContent="" OffContent="" />
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Save Destination -->
+                            <Border Classes="card" Padding="18">
+                                <StackPanel Spacing="10">
+                                    <TextBlock Text="SAVE LOCATION" Classes="label" />
+                                    <TextBlock Text="{Binding OutputDirectory}" FontSize="11"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" TextWrapping="Wrap"
+                                               MaxLines="2" TextTrimming="CharacterEllipsis" />
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                        <Button Classes="secondary" Content="Change folder" Click="BrowseOutput_Click"
+                                                IsEnabled="{Binding IsConfigurationEnabled}"
+                                                HorizontalAlignment="Stretch" />
+                                        <Button Grid.Column="1" Classes="ghost" Content="Open"
+                                                Command="{Binding OpenFolderCommand}" />
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+
+                <!-- ==================== LIBRARY PAGE ==================== -->
+                <Grid Grid.Row="1" RowDefinitions="Auto,*" IsVisible="{Binding IsLibraryPage}">
+
+                    <!-- Filter, Search & Actions Bar -->
+                    <Border Classes="card" Padding="14,12" Margin="0,0,0,16">
+                        <Grid ColumnDefinitions="*,180,Auto,Auto" ColumnSpacing="12">
+
+                            <!-- Search Input Box -->
+                            <TextBox Text="{Binding LibrarySearchQuery}"
+                                     PlaceholderText="Search recordings by name..."
+                                     VerticalAlignment="Center">
+                                <TextBox.InnerRightContent>
+                                    <Button Classes="ghost" Content="×" Padding="8,4"
+                                            Command="{Binding ClearSearchCommand}"
+                                            IsVisible="{Binding LibrarySearchQuery, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                </TextBox.InnerRightContent>
+                            </TextBox>
+
+                            <!-- Sort Order Dropdown -->
+                            <ComboBox Grid.Column="1"
+                                      ItemsSource="{Binding LibrarySortOptions}"
+                                      SelectedItem="{Binding LibrarySortOrder}"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Center" />
+
+                            <!-- Refresh -->
+                            <Button Grid.Column="2" Classes="secondary" Content="Refresh"
+                                    Command="{Binding RefreshLibraryCommand}" VerticalAlignment="Center" />
+
+                            <!-- Open Destination Folder -->
+                            <Button Grid.Column="3" Classes="secondary" Content="Open folder"
+                                    Command="{Binding OpenFolderCommand}" VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Library Content List -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <!-- Empty State -->
+                            <Border Classes="card" Padding="48" IsVisible="{Binding IsLibraryEmpty}"
+                                    HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                <StackPanel Spacing="12" HorizontalAlignment="Center">
+                                    <Border Width="60" Height="60" CornerRadius="30"
+                                            Background="{DynamicResource SurfaceMutedBrush}" HorizontalAlignment="Center">
+                                        <Path Data="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"
+                                              Fill="{DynamicResource AccentBrush}"
+                                              Width="24" Height="24" Stretch="Uniform"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <TextBlock Text="No recordings found" FontSize="18" FontWeight="Bold"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Your captured recordings will be listed here with thumbnails and metadata."
+                                               FontSize="12.5" Foreground="{DynamicResource TextSecondaryBrush}"
+                                               HorizontalAlignment="Center" />
+                                    <Button Classes="primary" Content="Create New Recording" Margin="0,8,0,0"
+                                            HorizontalAlignment="Center"
+                                            Command="{Binding NavigateCommand}" CommandParameter="record" />
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Grid of Recordings -->
+                            <ItemsControl ItemsSource="{Binding FilteredRecordings}" IsVisible="{Binding HasRecordings}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Classes="card" Width="324" Margin="0,0,18,18" Padding="12">
+                                            <StackPanel Spacing="10">
+
+                                                <!-- Thumbnail Card -->
+                                                <Border Height="148" CornerRadius="12"
+                                                        Background="{DynamicResource PreviewGradient}"
+                                                        ClipToBounds="True"
+                                                        Tag="{Binding}" Cursor="Hand"
+                                                        ToolTip.Tip="Open recording video"
+                                                        PointerPressed="RecordingThumbnail_PointerPressed">
+                                                    <Grid>
+                                                        <Image Source="{Binding Thumbnail}" Stretch="UniformToFill"
+                                                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
+                                                        <!-- Play Overlay Icon -->
+                                                        <Border Width="44" Height="44" CornerRadius="22"
+                                                                Background="#4D000000"
+                                                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                            <Path Data="M7 5 L18 12 L7 19 Z" Fill="White"
+                                                                  Width="16" Height="16" Stretch="Uniform"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center" />
+                                                        </Border>
+
+                                                        <!-- Format Badge -->
+                                                        <Border Background="#66000000" CornerRadius="6" Padding="7,3"
+                                                                HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                                                Margin="8">
+                                                            <TextBlock Text="MP4" FontSize="9.5" FontWeight="Bold"
+                                                                       Foreground="White" />
+                                                        </Border>
+
+                                                        <!-- Duration Badge -->
+                                                        <Border Background="#88000000" CornerRadius="6" Padding="8,3"
+                                                                HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                                                Margin="8" IsVisible="{Binding HasDuration}">
+                                                            <TextBlock Text="{Binding DurationText}" FontSize="10"
+                                                                       FontWeight="SemiBold" Foreground="White" />
+                                                        </Border>
+                                                    </Grid>
+                                                </Border>
+
+                                                <!-- Metadata -->
+                                                <StackPanel Spacing="3">
+                                                    <TextBlock Text="{Binding FileName}" FontSize="13"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{DynamicResource TextPrimaryBrush}"
+                                                               TextTrimming="CharacterEllipsis" MaxLines="1"
+                                                               ToolTip.Tip="{Binding FileName}" />
+                                                    <TextBlock Text="{Binding Meta}" FontSize="10.5"
+                                                               Foreground="{DynamicResource TextSecondaryBrush}" />
+                                                </StackPanel>
+
+                                                <!-- Action Buttons Row -->
+                                                <Grid ColumnDefinitions="*,*,Auto,Auto" ColumnSpacing="6">
+                                                    <Button Classes="secondary" Content="Open" Tag="{Binding}"
+                                                            Click="OpenRecording_Click" HorizontalAlignment="Stretch" />
+                                                    <Button Grid.Column="1" Classes="ghost" Content="Folder"
+                                                            Tag="{Binding}" Click="ShowInFolder_Click"
+                                                            HorizontalAlignment="Stretch" />
+                                                    <Button Grid.Column="2" Classes="ghost" Content="Copy"
+                                                            Tag="{Binding}" Click="CopyPath_Click"
+                                                            ToolTip.Tip="Copy file path" />
+                                                    <Button Grid.Column="3" Classes="danger" Content="Delete"
+                                                            Tag="{Binding}" Click="DeleteRecording_Click"
+                                                            ToolTip.Tip="Delete recording permanently" />
+                                                </Grid>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+
+                <!-- ==================== SETTINGS PAGE ==================== -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" IsVisible="{Binding IsSettingsPage}">
+                    <StackPanel Spacing="18" MaxWidth="840" HorizontalAlignment="Left">
+
+                        <!-- Appearance & Theme Card -->
+                        <Border Classes="card" Padding="20">
+                            <StackPanel Spacing="14">
+                                <StackPanel Spacing="3">
+                                    <TextBlock Text="Appearance &amp; Window Behavior" FontSize="16" FontWeight="Bold"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" />
+                                    <TextBlock Text="Customize the color mode and desktop workflow." FontSize="11.5"
+                                               Foreground="{DynamicResource TextSecondaryBrush}" />
+                                </StackPanel>
+
+                                <Grid ColumnDefinitions="*,180" ColumnSpacing="14">
+                                    <StackPanel Spacing="4">
+                                        <TextBlock Text="Theme Variant" Classes="label" />
+                                        <TextBlock Text="Select between Dark Mode, Light Mode, or Follow Windows System."
+                                                   FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" />
+                                    </StackPanel>
+                                    <ComboBox Grid.Column="1" ItemsSource="{Binding ThemeModes}"
+                                              SelectedItem="{Binding SelectedThemeMode}"
+                                              HorizontalAlignment="Stretch" MinHeight="36" />
+                                </Grid>
+
+                                <Border Classes="separator" />
+
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <StackPanel Spacing="3">
+                                        <TextBlock Text="Minimize to Taskbar during Recording" FontSize="12.5" FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                                        <TextBlock Text="Automatically hides the recorder window when capture starts and restores it upon stopping."
+                                                   FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" />
+                                    </StackPanel>
+                                    <ToggleSwitch Grid.Column="1" IsChecked="{Binding MinimizeOnRecord}"
+                                                  OnContent="" OffContent="" VerticalAlignment="Center" />
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Recording Presets & Countdown Card -->
+                        <Border Classes="card" Padding="20">
+                            <StackPanel Spacing="14">
+                                <StackPanel Spacing="3">
+                                    <TextBlock Text="Recording Defaults" FontSize="16" FontWeight="Bold"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" />
+                                    <TextBlock Text="Configure capture framerate, quality compression, and countdowns." FontSize="11.5"
+                                               Foreground="{DynamicResource TextSecondaryBrush}" />
+                                </StackPanel>
+
+                                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+                                    <StackPanel Spacing="5">
+                                        <TextBlock Text="Countdown Timer" Classes="label" />
+                                        <ComboBox ItemsSource="{Binding CountdownOptions}"
+                                                  SelectedItem="{Binding SelectedCountdownSeconds}"
+                                                  HorizontalAlignment="Stretch" MinHeight="36">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding StringFormat='{}{0} seconds'}" />
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Spacing="5">
+                                        <TextBlock Text="Default Quality" Classes="label" />
+                                        <ComboBox ItemsSource="{Binding Qualities}"
+                                                  SelectedItem="{Binding SelectedQuality}"
+                                                  HorizontalAlignment="Stretch" MinHeight="36">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2" Spacing="5">
+                                        <TextBlock Text="Frame Rate" Classes="label" />
+                                        <ComboBox ItemsSource="{Binding FpsOptions}"
+                                                  SelectedItem="{Binding SelectedFps}"
+                                                  HorizontalAlignment="Stretch" MinHeight="36">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding StringFormat='{}{0} fps'}" />
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Grid>
+
+                                <StackPanel Spacing="5">
+                                    <TextBlock Text="Video Encoder" Classes="label" />
+                                    <ComboBox ItemsSource="{Binding Encoders}"
+                                              SelectedItem="{Binding SelectedEncoder}"
+                                              HorizontalAlignment="Stretch" MinHeight="36">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Name}" />
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Text="Capture mouse cursor by default" FontSize="12.5" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center" />
+                                    <ToggleSwitch Grid.Column="1" IsChecked="{Binding IncludeCursor}"
+                                                  OnContent="" OffContent="" />
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Audio Defaults Card -->
+                        <Border Classes="card" Padding="20">
+                            <StackPanel Spacing="14">
+                                <StackPanel Spacing="3">
+                                    <TextBlock Text="Audio Hardware Defaults" FontSize="16" FontWeight="Bold"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" />
+                                    <TextBlock Text="Default capture devices mixed into the recording stream." FontSize="11.5"
+                                               Foreground="{DynamicResource TextSecondaryBrush}" />
+                                </StackPanel>
+
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                    <StackPanel Spacing="5">
+                                        <TextBlock Text="Default Microphone" Classes="label" />
+                                        <ComboBox ItemsSource="{Binding Microphones}"
+                                                  SelectedItem="{Binding SelectedMicrophone}"
+                                                  IsEnabled="{Binding MicrophoneEnabled}"
+                                                  HorizontalAlignment="Stretch" MinHeight="36">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <ToggleSwitch Grid.Column="1" IsChecked="{Binding MicrophoneEnabled}"
+                                                  OnContent="" OffContent="" VerticalAlignment="Bottom"
+                                                  Margin="0,0,0,2" />
+                                </Grid>
+
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                    <StackPanel Spacing="5">
+                                        <TextBlock Text="Default System Audio" Classes="label" />
+                                        <ComboBox ItemsSource="{Binding SystemAudioDevices}"
+                                                  SelectedItem="{Binding SelectedSystemAudio}"
+                                                  IsEnabled="{Binding SystemAudioEnabled}"
+                                                  HorizontalAlignment="Stretch" MinHeight="36">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <ToggleSwitch Grid.Column="1" IsChecked="{Binding SystemAudioEnabled}"
+                                                  OnContent="" OffContent="" VerticalAlignment="Bottom"
+                                                  Margin="0,0,0,2" />
+                                </Grid>
+
+                                <Button Classes="secondary" Content="Refresh Audio Devices"
+                                        Command="{Binding RefreshDevicesCommand}" HorizontalAlignment="Left" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Storage Destination Card -->
+                        <Border Classes="card" Padding="20">
+                            <StackPanel Spacing="14">
+                                <StackPanel Spacing="3">
+                                    <TextBlock Text="Storage &amp; Files" FontSize="16" FontWeight="Bold"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" />
+                                    <TextBlock Text="Where all recorded MP4 video files are written." FontSize="11.5"
+                                               Foreground="{DynamicResource TextSecondaryBrush}" />
+                                </StackPanel>
+
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                    <TextBox Text="{Binding OutputDirectory}" IsReadOnly="True" VerticalAlignment="Center" />
+                                    <Button Grid.Column="1" Classes="secondary" Content="Browse..." Click="BrowseOutput_Click"
+                                            VerticalAlignment="Center" />
+                                </Grid>
+                                <TextBlock Text="{Binding SaveStatusText}" FontSize="11"
+                                           Foreground="{DynamicResource TextSecondaryBrush}" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Keyboard Shortcuts Card -->
+                        <Border Classes="card" Padding="20">
+                            <StackPanel Spacing="12">
+                                <TextBlock Text="Keyboard Shortcuts" FontSize="16" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <Grid ColumnDefinitions="140,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10">
+                                    <Border Classes="pill neutral" HorizontalAlignment="Left" Padding="8,3">
+                                        <TextBlock Text="Ctrl + R" Classes="mono" FontSize="11.5" FontWeight="Bold" />
+                                    </Border>
+                                    <TextBlock Grid.Column="1" Text="Start or Stop Recording instantly" FontSize="12.5"
+                                               VerticalAlignment="Center" Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                    <Border Grid.Row="1" Classes="pill neutral" HorizontalAlignment="Left" Padding="8,3">
+                                        <TextBlock Text="Ctrl + 1" Classes="mono" FontSize="11.5" FontWeight="Bold" />
+                                    </Border>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Switch to Record view" FontSize="12.5"
+                                               VerticalAlignment="Center" Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                    <Border Grid.Row="2" Classes="pill neutral" HorizontalAlignment="Left" Padding="8,3">
+                                        <TextBlock Text="Ctrl + 2" Classes="mono" FontSize="11.5" FontWeight="Bold" />
+                                    </Border>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Switch to Library view" FontSize="12.5"
+                                               VerticalAlignment="Center" Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                    <Border Grid.Row="3" Classes="pill neutral" HorizontalAlignment="Left" Padding="8,3">
+                                        <TextBlock Text="Ctrl + 3" Classes="mono" FontSize="11.5" FontWeight="Bold" />
+                                    </Border>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" Text="Switch to Settings view" FontSize="12.5"
+                                               VerticalAlignment="Center" Foreground="{DynamicResource TextPrimaryBrush}" />
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- About & Privacy Section -->
+                        <Border Classes="card" Padding="20">
+                            <StackPanel Spacing="10">
+                                <TextBlock Text="About Jeilo Recorder" FontSize="16" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <Grid ColumnDefinitions="140,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
+                                    <TextBlock Text="Version" Classes="label" />
+                                    <TextBlock Grid.Column="1" Text="{Binding AppVersion}" FontSize="12.5"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                    <TextBlock Grid.Row="1" Text="Encoder Engine" Classes="label" />
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding FfmpegStatus}" FontSize="12.5"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                    <TextBlock Grid.Row="2" Text="Privacy Guarantee" Classes="label" />
+                                    <TextBlock Grid.Row="2" Grid.Column="1"
+                                               Text="Jeilo Recorder is 100% offline. No telemetry, cloud uploads, accounts, or watermarks."
+                                               FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" TextWrapping="Wrap" />
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Footer Status Bar -->
+                <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Margin="0,14,0,0">
+                    <TextBlock Text="{Binding FfmpegPathDisplay}" FontSize="10.5"
+                               Foreground="{DynamicResource TextSecondaryBrush}" TextTrimming="CharacterEllipsis"
+                               VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="1" Text="Jeilo Screen Recorder v0.1.0" FontSize="10.5"
+                               Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <!-- Toast Notification Banner -->
+        <Border IsVisible="{Binding IsToastVisible}"
+                HorizontalAlignment="Center" VerticalAlignment="Top"
+                Margin="0,20,0,0"
+                ZIndex="900"
+                Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource AccentBrush}"
+                BorderThickness="1.5"
+                CornerRadius="24"
+                Padding="18,9"
+                BoxShadow="0 10 30 0 #50000000">
+            <StackPanel Orientation="Horizontal" Spacing="9">
+                <Ellipse Width="8" Height="8" Fill="{DynamicResource AccentBrush}" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding ToastMessage}" FontSize="12.5" FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center" />
+            </StackPanel>
+        </Border>
+
+        <!-- Fullscreen Countdown Overlay -->
+        <Border IsVisible="{Binding IsCountingDown}"
+                Background="#C0000000"
+                ZIndex="1000"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Border Width="320" Height="280" CornerRadius="24"
+                    Background="{DynamicResource SurfaceBrush}"
+                    BorderBrush="{DynamicResource BorderBrushSoft}"
+                    BorderThickness="1"
+                    BoxShadow="0 20 60 0 #80000000"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Padding="28">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="16">
+                    <TextBlock Text="RECORDING IN" Classes="label" HorizontalAlignment="Center" LetterSpacing="1" />
+                    <Border Width="96" Height="96" CornerRadius="48"
+                            Background="{DynamicResource AccentSoftBrush}"
+                            BorderBrush="{DynamicResource AccentBorderBrush}"
+                            BorderThickness="2"
+                            HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding CountdownNumber}" FontSize="56" FontWeight="Bold"
+                                   Foreground="{DynamicResource AccentBrush}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <Button Classes="secondary" Content="Cancel Countdown"
+                            Command="{Binding CancelCountdownCommand}"
+                            HorizontalAlignment="Center" Width="160" />
+                </StackPanel>
+            </Border>
+        </Border>
+    </Grid>
+</Window>

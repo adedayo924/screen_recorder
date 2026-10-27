@@ -1,0 +1,12 @@
+C:\Users\DIC ICT\Desktop\programming\screen_recorder\src\Jeilo.Core\bin\Debug\net8.0-windows10.0.19041.0\Jeilo.Core.deps.json
+C:\Users\DIC ICT\Desktop\programming\screen_recorder\src\Jeilo.Core\bin\Debug\net8.0-windows10.0.19041.0\Jeilo.Core.dll
+C:\Users\DIC ICT\Desktop\programming\screen_recorder\src\Jeilo.Core\bin\Debug\net8.0-windows10.0.19041.0\Jeilo.Core.pdb
+C:\Users\DIC ICT\Desktop\programming\screen_recorder\src\Jeilo.Core\obj\Debug\net8.0-windows10.0.19041.0\Jeilo.Core.csproj.AssemblyReference.cache
+C:\Users\DIC ICT\Desktop\programming\screen_recorder\src\Jeilo.Core\obj\Debug\net8.0-windows10.0.19041.0\Jeilo.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DIC ICT\Desktop\programming\screen_recorder\src\Jeilo.Core\obj\Debug\net8.0-windows10.0.19041.0\Jeilo.Core.AssemblyInfoInputs.cache
+C:\Users\DIC ICT\Desktop\programming\screen_recorder\src\Jeilo.Core\obj\Debug\net8.0-windows10.0.19041.0\Jeilo.Core.AssemblyInfo.cs
+C:\Users\DIC ICT\Desktop\programming\screen_recorder\src\Jeilo.Core\obj\Debug\net8.0-windows10.0.19041.0\Jeilo.Core.csproj.CoreCompileInputs.cache
+C:\Users\DIC ICT\Desktop\programming\screen_recorder\src\Jeilo.Core\obj\Debug\net8.0-windows10.0.19041.0\Jeilo.Core.dll
+C:\Users\DIC ICT\Desktop\programming\screen_recorder\src\Jeilo.Core\obj\Debug\net8.0-windows10.0.19041.0\refint\Jeilo.Core.dll
+C:\Users\DIC ICT\Desktop\programming\screen_recorder\src\Jeilo.Core\obj\Debug\net8.0-windows10.0.19041.0\Jeilo.Core.pdb
+C:\Users\DIC ICT\Desktop\programming\screen_recorder\src\Jeilo.Core\obj\Debug\net8.0-windows10.0.19041.0\ref\Jeilo.Core.dll

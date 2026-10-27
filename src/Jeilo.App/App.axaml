@@ -1,0 +1,92 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Jeilo.App.App"
+             RequestedThemeVariant="Dark">
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+          <SolidColorBrush x:Key="CanvasBrush" Color="#F4F7F5" />
+          <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
+          <SolidColorBrush x:Key="SurfaceMutedBrush" Color="#F7FAF8" />
+          <SolidColorBrush x:Key="BorderBrushSoft" Color="#E2EBE6" />
+          <SolidColorBrush x:Key="BorderBrushStrong" Color="#CFDDD5" />
+          <SolidColorBrush x:Key="TextPrimaryBrush" Color="#12251D" />
+          <SolidColorBrush x:Key="TextSecondaryBrush" Color="#63766E" />
+          <SolidColorBrush x:Key="TextTertiaryBrush" Color="#93A39B" />
+          <SolidColorBrush x:Key="InkBrush" Color="#12251D" />
+          <SolidColorBrush x:Key="MutedBrush" Color="#63766E" />
+          <SolidColorBrush x:Key="AccentSoftBrush" Color="#E7F7EF" />
+          <SolidColorBrush x:Key="AccentBorderBrush" Color="#BEEBD5" />
+          <SolidColorBrush x:Key="DangerSoftBrush" Color="#FDECEC" />
+          <SolidColorBrush x:Key="WarningSoftBrush" Color="#FFF7ED" />
+          <SolidColorBrush x:Key="NavHoverBrush" Color="#EEF5F1" />
+          <SolidColorBrush x:Key="MeterEmptyBrush" Color="#E5ECE8" />
+          <SolidColorBrush x:Key="HeaderOverlayBrush" Color="#F4F7F5" />
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="Dark">
+          <SolidColorBrush x:Key="CanvasBrush" Color="#0D1117" />
+          <SolidColorBrush x:Key="SurfaceBrush" Color="#161B22" />
+          <SolidColorBrush x:Key="SurfaceMutedBrush" Color="#21262D" />
+          <SolidColorBrush x:Key="BorderBrushSoft" Color="#30363D" />
+          <SolidColorBrush x:Key="BorderBrushStrong" Color="#484F58" />
+          <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F0F6FC" />
+          <SolidColorBrush x:Key="TextSecondaryBrush" Color="#8B949E" />
+          <SolidColorBrush x:Key="TextTertiaryBrush" Color="#6E7681" />
+          <SolidColorBrush x:Key="InkBrush" Color="#F0F6FC" />
+          <SolidColorBrush x:Key="MutedBrush" Color="#8B949E" />
+          <SolidColorBrush x:Key="AccentSoftBrush" Color="#163828" />
+          <SolidColorBrush x:Key="AccentBorderBrush" Color="#1C553C" />
+          <SolidColorBrush x:Key="DangerSoftBrush" Color="#3B181A" />
+          <SolidColorBrush x:Key="WarningSoftBrush" Color="#38270F" />
+          <SolidColorBrush x:Key="NavHoverBrush" Color="#1F242C" />
+          <SolidColorBrush x:Key="MeterEmptyBrush" Color="#21262D" />
+          <SolidColorBrush x:Key="HeaderOverlayBrush" Color="#0D1117" />
+        </ResourceDictionary>
+      </ResourceDictionary.ThemeDictionaries>
+
+      <!-- Common Theme Resources -->
+      <Color x:Key="SystemAccentColor">#10B981</Color>
+      <Color x:Key="SystemAccentColorDark1">#0D955C</Color>
+      <Color x:Key="SystemAccentColorDark2">#0A7E4E</Color>
+      <Color x:Key="SystemAccentColorLight1">#34D399</Color>
+      <Color x:Key="SystemAccentColorLight2">#6EE7B7</Color>
+
+      <SolidColorBrush x:Key="AccentBrush" Color="#10B981" />
+      <SolidColorBrush x:Key="AccentHoverBrush" Color="#059669" />
+      <SolidColorBrush x:Key="AccentPressedBrush" Color="#047857" />
+      <SolidColorBrush x:Key="DangerBrush" Color="#EF4444" />
+      <SolidColorBrush x:Key="DangerHoverBrush" Color="#DC2626" />
+      <SolidColorBrush x:Key="WarningBrush" Color="#F59E0B" />
+
+      <!-- Gradients -->
+      <LinearGradientBrush x:Key="HeroGradient" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#0B3B2C" Offset="0" />
+        <GradientStop Color="#0D5A3E" Offset="0.55" />
+        <GradientStop Color="#10B981" Offset="1" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="PreviewGradient" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#0C1B14" Offset="0" />
+        <GradientStop Color="#153626" Offset="1" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="BrandGradient" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#10B981" Offset="0" />
+        <GradientStop Color="#059669" Offset="1" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="LogoGradient" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#10B981" Offset="0" />
+        <GradientStop Color="#059669" Offset="1" />
+      </LinearGradientBrush>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Styles>
+    <FluentTheme />
+    <StyleInclude Source="avares://Jeilo.App/Styles/Theme.axaml" />
+  </Application.Styles>
+</Application>
