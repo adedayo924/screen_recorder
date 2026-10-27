@@ -1,0 +1,67 @@
+{
+  "App": "Jeilo.Spike",
+  "Phase": 0,
+  "Timestamp": "2026-10-25T10:51:59.7739025+01:00",
+  "Options": {
+    "Source": "monitor",
+    "DurationSeconds": 5,
+    "Fps": 30,
+    "Encoder": "qsv",
+    "Mic": "Microphone (Logi USB Headset H340)",
+    "SystemAudio": "Speakers (Logi USB Headset H340)",
+    "SyncIntervalSeconds": 30
+  },
+  "Capture": {
+    "Width": 1920,
+    "Height": 1080,
+    "ExpectedFrames": 150,
+    "FramesWritten": 150,
+    "FramesCaptured": 119,
+    "FramesDropped": 0
+  },
+  "Audio": {
+    "ExpectedSamples": 480000,
+    "SamplesWritten": 480000,
+    "MaxMicPeak": 0.009446648,
+    "MaxSystemPeak": 0.18437089
+  },
+  "Performance": {
+    "PeakCombinedCpuPercent": 28.95225417509299,
+    "PeakAppMemoryMiB": 166.72265625,
+    "PeakFfmpegMemoryMiB": 131.2890625
+  },
+  "Outputs": {
+    "Mkv": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-monitor-qsv.mkv",
+    "Mp4": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-monitor-qsv.mp4",
+    "MixedWav": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-monitor-qsv.mixed.wav",
+    "FfmpegLog": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-monitor-qsv.mkv.ffmpeg.log",
+    "Probe": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-monitor-qsv.probe.json"
+  },
+  "Probe": {
+    "Duration": "5.033000",
+    "Size": "380860",
+    "BitRate": "605380",
+    "Streams": [
+      {
+        "Type": "video",
+        "Codec": "h264",
+        "Width": 1920,
+        "Height": 1080,
+        "Duration": "5.033000",
+        "Frames": "151",
+        "SampleRate": null,
+        "Channels": null
+      },
+      {
+        "Type": "audio",
+        "Codec": "aac",
+        "Width": null,
+        "Height": null,
+        "Duration": "5.014000",
+        "Frames": "236",
+        "SampleRate": "48000",
+        "Channels": 2
+      }
+    ]
+  }
+}
