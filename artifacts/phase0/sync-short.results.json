@@ -1,0 +1,67 @@
+{
+  "App": "Jeilo.Spike",
+  "Phase": 0,
+  "Timestamp": "2026-10-25T11:27:08.1122548+01:00",
+  "Options": {
+    "Source": "window",
+    "DurationSeconds": 12,
+    "Fps": 30,
+    "Encoder": "qsv",
+    "Mic": "Microphone (Logi USB Headset H340)",
+    "SystemAudio": "Speakers (Logi USB Headset H340)",
+    "SyncIntervalSeconds": 2
+  },
+  "Capture": {
+    "Width": 1920,
+    "Height": 1080,
+    "ExpectedFrames": 360,
+    "FramesWritten": 360,
+    "FramesCaptured": 243,
+    "FramesDropped": 0
+  },
+  "Audio": {
+    "ExpectedSamples": 1152000,
+    "SamplesWritten": 1152000,
+    "MaxMicPeak": 0.127752,
+    "MaxSystemPeak": 0.26742035
+  },
+  "Performance": {
+    "PeakCombinedCpuPercent": 25.55363707324738,
+    "PeakAppMemoryMiB": 157.6171875,
+    "PeakFfmpegMemoryMiB": 149.84765625
+  },
+  "Outputs": {
+    "Mkv": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\sync-short.mkv",
+    "Mp4": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\sync-short.mp4",
+    "MixedWav": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\sync-short.mixed.wav",
+    "FfmpegLog": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\sync-short.mkv.ffmpeg.log",
+    "Probe": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\sync-short.probe.json"
+  },
+  "Probe": {
+    "Duration": "12.033000",
+    "Size": "348153",
+    "BitRate": "231465",
+    "Streams": [
+      {
+        "Type": "video",
+        "Codec": "h264",
+        "Width": 1920,
+        "Height": 1080,
+        "Duration": "12.033000",
+        "Frames": "361",
+        "SampleRate": null,
+        "Channels": null
+      },
+      {
+        "Type": "audio",
+        "Codec": "aac",
+        "Width": null,
+        "Height": null,
+        "Duration": "12.011000",
+        "Frames": "564",
+        "SampleRate": "48000",
+        "Channels": 2
+      }
+    ]
+  }
+}

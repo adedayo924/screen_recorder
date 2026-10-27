@@ -1,0 +1,45 @@
+{
+  "Input": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\sync-short.mp4",
+  "DurationSeconds": 12.033,
+  "SyncIntervalSeconds": 2,
+  "MeanOffsetMs": 16.05550000000026,
+  "DriftMsPerMinute": -127.42885714285241,
+  "Markers": [
+    {
+      "MarkerSeconds": 1,
+      "FlashSeconds": 1.1,
+      "BeepSeconds": 1.1735,
+      "OffsetMs": 73.4999999999999
+    },
+    {
+      "MarkerSeconds": 3,
+      "FlashSeconds": 3.133,
+      "BeepSeconds": 3.0935,
+      "OffsetMs": -39.49999999999987
+    },
+    {
+      "MarkerSeconds": 5,
+      "FlashSeconds": 5.067,
+      "BeepSeconds": 5.077500000000001,
+      "OffsetMs": 10.500000000000398
+    },
+    {
+      "MarkerSeconds": 7,
+      "FlashSeconds": 7.067,
+      "BeepSeconds": 7.082833,
+      "OffsetMs": 15.832999999999764
+    },
+    {
+      "MarkerSeconds": 9,
+      "FlashSeconds": 9.067,
+      "BeepSeconds": 9.1095,
+      "OffsetMs": 42.500000000000426
+    },
+    {
+      "MarkerSeconds": 11,
+      "FlashSeconds": 11.1,
+      "BeepSeconds": 11.0935,
+      "OffsetMs": -6.499999999999062
+    }
+  ]
+}
