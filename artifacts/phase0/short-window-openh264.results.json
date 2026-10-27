@@ -1,0 +1,67 @@
+{
+  "App": "Jeilo.Spike",
+  "Phase": 0,
+  "Timestamp": "2026-10-25T11:41:16.995871+01:00",
+  "Options": {
+    "Source": "window",
+    "DurationSeconds": 8,
+    "Fps": 30,
+    "Encoder": "openh264",
+    "Mic": "Microphone (Logi USB Headset H340)",
+    "SystemAudio": "Speakers (Logi USB Headset H340)",
+    "SyncIntervalSeconds": 30
+  },
+  "Capture": {
+    "Width": 1920,
+    "Height": 1080,
+    "ExpectedFrames": 240,
+    "FramesWritten": 240,
+    "FramesCaptured": 167,
+    "FramesDropped": 0
+  },
+  "Audio": {
+    "ExpectedSamples": 768000,
+    "SamplesWritten": 768000,
+    "MaxMicPeak": 0.051219873,
+    "MaxSystemPeak": 0.3775471
+  },
+  "Performance": {
+    "PeakCombinedCpuPercent": 27.909499889279243,
+    "PeakAppMemoryMiB": 156.796875,
+    "PeakFfmpegMemoryMiB": 66.265625
+  },
+  "Outputs": {
+    "Mkv": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-window-openh264.mkv",
+    "Mp4": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-window-openh264.mp4",
+    "MixedWav": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-window-openh264.mixed.wav",
+    "FfmpegLog": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-window-openh264.mkv.ffmpeg.log",
+    "Probe": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-window-openh264.probe.json"
+  },
+  "Probe": {
+    "Duration": "8.033000",
+    "Size": "258334",
+    "BitRate": "257272",
+    "Streams": [
+      {
+        "Type": "video",
+        "Codec": "h264",
+        "Width": 1920,
+        "Height": 1080,
+        "Duration": "8.033000",
+        "Frames": "241",
+        "SampleRate": null,
+        "Channels": null
+      },
+      {
+        "Type": "audio",
+        "Codec": "aac",
+        "Width": null,
+        "Height": null,
+        "Duration": "8.000000",
+        "Frames": "376",
+        "SampleRate": "48000",
+        "Channels": 2
+      }
+    ]
+  }
+}
