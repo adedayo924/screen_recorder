@@ -1,0 +1,69 @@
+{
+  "Input": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\long-10min-qsv.mp4",
+  "DurationSeconds": 600.033,
+  "SyncIntervalSeconds": 60,
+  "MeanOffsetMs": 24.733200000001034,
+  "DriftMsPerMinute": -3.686860606062223,
+  "Markers": [
+    {
+      "MarkerSeconds": 1,
+      "FlashSeconds": 1.067,
+      "BeepSeconds": 1.1735,
+      "OffsetMs": 106.50000000000004
+    },
+    {
+      "MarkerSeconds": 61,
+      "FlashSeconds": 61.067,
+      "BeepSeconds": 61.098833,
+      "OffsetMs": 31.83299999999889
+    },
+    {
+      "MarkerSeconds": 121,
+      "FlashSeconds": 121.1,
+      "BeepSeconds": 121.1095,
+      "OffsetMs": 9.500000000002728
+    },
+    {
+      "MarkerSeconds": 181,
+      "FlashSeconds": 181.1,
+      "BeepSeconds": 181.098833,
+      "OffsetMs": -1.1669999999810443
+    },
+    {
+      "MarkerSeconds": 241,
+      "FlashSeconds": 241.1,
+      "BeepSeconds": 241.1095,
+      "OffsetMs": 9.500000000002728
+    },
+    {
+      "MarkerSeconds": 301,
+      "FlashSeconds": 301.1,
+      "BeepSeconds": 301.098833,
+      "OffsetMs": -1.167000000009466
+    },
+    {
+      "MarkerSeconds": 361,
+      "FlashSeconds": 361.067,
+      "BeepSeconds": 361.1095,
+      "OffsetMs": 42.50000000001819
+    },
+    {
+      "MarkerSeconds": 421,
+      "FlashSeconds": 421.1,
+      "BeepSeconds": 421.098833,
+      "OffsetMs": -1.167000000009466
+    },
+    {
+      "MarkerSeconds": 481,
+      "FlashSeconds": 481.133,
+      "BeepSeconds": 481.1095,
+      "OffsetMs": -23.49999999995589
+    },
+    {
+      "MarkerSeconds": 541,
+      "FlashSeconds": 541.067,
+      "BeepSeconds": 541.1415,
+      "OffsetMs": 74.49999999994361
+    }
+  ]
+}

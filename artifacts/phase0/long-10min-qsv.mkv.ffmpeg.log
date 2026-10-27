@@ -1,0 +1,2 @@
+ffmpeg -hide_banner -nostdin -loglevel warning -y -f rawvideo -pix_fmt bgra -video_size 1920x1080 -framerate 30 -i \\.\pipe\jeilo_video_ba520a3689ed4adb99340a628b7aac38 -f s16le -ar 48000 -ac 2 -i \\.\pipe\jeilo_audio_ba520a3689ed4adb99340a628b7aac38 -map 0:v:0 -map 1:a:0 -c:v h264_qsv -preset veryfast -global_quality 24 -look_ahead 0 -c:a aac -b:a 192k -f matroska "C:\Users\DIC ICT\Desktop\programming\screen_recorder\artifacts\phase0\long-10min-qsv.mkv"
+[aist#1:0/pcm_s16le @ 00000132e6158300] Guessed Channel Layout: stereo
