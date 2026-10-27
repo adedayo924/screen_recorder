@@ -1,0 +1,67 @@
+{
+  "App": "Jeilo.Spike",
+  "Phase": 0,
+  "Timestamp": "2026-10-25T11:41:02.8339691+01:00",
+  "Options": {
+    "Source": "window",
+    "DurationSeconds": 8,
+    "Fps": 30,
+    "Encoder": "mf",
+    "Mic": "Microphone (Logi USB Headset H340)",
+    "SystemAudio": "Speakers (Logi USB Headset H340)",
+    "SyncIntervalSeconds": 30
+  },
+  "Capture": {
+    "Width": 1920,
+    "Height": 1080,
+    "ExpectedFrames": 240,
+    "FramesWritten": 240,
+    "FramesCaptured": 173,
+    "FramesDropped": 0
+  },
+  "Audio": {
+    "ExpectedSamples": 768000,
+    "SamplesWritten": 768000,
+    "MaxMicPeak": 0.12969892,
+    "MaxSystemPeak": 0.4035603
+  },
+  "Performance": {
+    "PeakCombinedCpuPercent": 27.074102418113874,
+    "PeakAppMemoryMiB": 156.76953125,
+    "PeakFfmpegMemoryMiB": 223.64453125
+  },
+  "Outputs": {
+    "Mkv": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-window-mf.mkv",
+    "Mp4": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-window-mf.mp4",
+    "MixedWav": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-window-mf.mixed.wav",
+    "FfmpegLog": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-window-mf.mkv.ffmpeg.log",
+    "Probe": "C:\\Users\\DIC ICT\\Desktop\\programming\\screen_recorder\\artifacts\\phase0\\short-window-mf.probe.json"
+  },
+  "Probe": {
+    "Duration": "8.033000",
+    "Size": "286647",
+    "BitRate": "285469",
+    "Streams": [
+      {
+        "Type": "video",
+        "Codec": "h264",
+        "Width": 1920,
+        "Height": 1080,
+        "Duration": "8.033000",
+        "Frames": "241",
+        "SampleRate": null,
+        "Channels": null
+      },
+      {
+        "Type": "audio",
+        "Codec": "aac",
+        "Width": null,
+        "Height": null,
+        "Duration": "8.000000",
+        "Frames": "376",
+        "SampleRate": "48000",
+        "Channels": 2
+      }
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+ffmpeg -hide_banner -nostdin -loglevel warning -y -f rawvideo -pix_fmt bgra -video_size 1920x1080 -framerate 30 -i \\.\pipe\jeilo_video_0d6b1d2823324bf68a34e5ae03b41833 -f s16le -ar 48000 -ac 2 -i \\.\pipe\jeilo_audio_0d6b1d2823324bf68a34e5ae03b41833 -map 0:v:0 -map 1:a:0 -c:v libopenh264 -b:v 8M -g 60 -c:a aac -b:a 192k -f matroska "C:\Users\DIC ICT\Desktop\programming\screen_recorder\artifacts\phase0\short-window-openh264.mkv"
+[aist#1:0/pcm_s16le @ 000001b92d16ecc0] Guessed Channel Layout: stereo
+[libopenh264 @ 000001b92d170200] [OpenH264] this = 0x000001b92d149fe0, Warning:layerId(0) doesn't support profile(578), change to UNSPECIFIC profile
+[libopenh264 @ 000001b92d170200] [OpenH264] this = 0x000001b92d149fe0, Warning:bEnableFrameSkip = 0,bitrate can't be controlled for RC_QUALITY_MODE,RC_BITRATE_MODE and RC_TIMESTAMP_MODE without enabling skip frame.
